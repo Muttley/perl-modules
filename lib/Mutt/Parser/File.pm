@@ -7,7 +7,7 @@ use Moose;
 
 use namespace::clean -except => [qw(meta)];
 
-has 'fh' => (
+has '_fh' => (
 	is => 'ro',
 	isa => 'FileHandle',
 	lazy => 1,
@@ -18,7 +18,8 @@ has 'fh' => (
 			|| croak "Unable to open file: $!";
 
 		return $fh;
-	}
+	},
+	init_arg => undef,
 );
 
 has 'filename' => (
@@ -30,7 +31,7 @@ has 'filename' => (
 sub slurp {
 	my $self = shift;
 
-	my $fh = $self->fh;
+	my $fh = $self->_fh;
 
 	my $contents;
 	eval {
