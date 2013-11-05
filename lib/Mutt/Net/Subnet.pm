@@ -55,7 +55,7 @@ sub _calculate_end_address {
 	my $start_int = $self->start_address->integer;
 	my $bitmask = $self->subnet_mask->integer;
 
-	my $end_int = ($start_int & $bitmask) + ~$bitmask;
+	my $end_int = (($start_int & $bitmask) + ~$bitmask) & 0xffffffff;
 
 	$self->end_address->from_int ($end_int);
 }
