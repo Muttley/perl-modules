@@ -116,6 +116,19 @@ sub mask_length {
 	return count_set_bits (shift->subnet_mask->integer);
 }
 
+sub matches {
+	my $self   = shift;
+	my $subnet = shift;
+
+	my $left_start = $self->start_address->integer;
+	my $left_end   = $self->end_address  ->integer;
+
+	my $right_start = $subnet->start_address->integer;
+	my $right_end   = $subnet->end_address  ->integer;
+
+	return ($left_start == $right_start) && ($left_end == $right_end);
+}
+
 sub split_subnet {
 	my $self = shift;
 	my $mask_length = shift;
